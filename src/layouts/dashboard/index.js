@@ -8,7 +8,7 @@ const DashboardLayout = () => {
 
     return (
         <>
-            <Box sx={{background: theme.palette.background.paper, height: "100vh", width: 100}}>
+            <Box sx={{background: theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", height: "100vh", width: 100}}>
 
             </Box>
             <Outlet />
