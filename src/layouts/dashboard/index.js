@@ -6,11 +6,9 @@ import { useTheme } from "@mui/material/styles";
 const DashboardLayout = () => {
     const theme = useTheme();
 
-    console.log(theme);
-
     return (
         <>
-            <Box sx={{background: "black", height: "100vh", width: 100}}>
+            <Box sx={{background: theme.palette.background.paper, height: "100vh", width: 100}}>
 
             </Box>
             <Outlet />
