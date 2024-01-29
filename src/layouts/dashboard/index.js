@@ -13,6 +13,7 @@ const DashboardLayout = () => {
                     backgroundColor: theme.palette.primary.main,
                     height: 64,
                     width: 64,
+                    borderRadius: 2.5,
                 }}>
 
                 </Box>
