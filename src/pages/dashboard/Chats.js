@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Stack, Typography, IconButton, Button, Divider, Avatar, Badge } from "@mui/material";
-import { styled } from "@mui/material/styles"
+import { styled, useTheme } from "@mui/material/styles"
 import { CircleDashed, MagnifyingGlass, ArchiveBox } from "phosphor-react";
 import { Search, SearchIconWrapper, StyledInputBase } from "../../components/Search";
 import { faker } from "@faker-js/faker";
@@ -37,11 +37,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const ChatElement = ({id, name, img, msg, time, unread, online}) => {
+    const theme = useTheme();
     return (
         <Box sx={{
             width: "100%",
             borderRadius: 1,
-            backgroundColor: "#FFF",
+            backgroundColor: theme.palette.mode === "light" ? "#FFF" : theme.palette.background.default,
         }}
         p={2}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -83,13 +84,14 @@ const ChatElement = ({id, name, img, msg, time, unread, online}) => {
 }
 
 const Chats = () => {
+    const theme = useTheme();
     return (
         <>
             <Box
             sx={{
                 position: "relative",
                 width: 320,
-                backgroundColor: "#F8FAFF",
+                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
                 boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
             }}
             >
@@ -131,7 +133,7 @@ const Chats = () => {
                                         return (<ChatElement {...el}/>)
                                     })
                                 }
-                                
+
                                 <Typography variant="subtitle2" sx={{color: "#676767"}}>
                                     All Chats
                                 </Typography>
