@@ -14,7 +14,7 @@ const ChatElement = ({id, name, img, msg, time, unread, online}) => {
         <Box sx={{
             width: "100%",
             borderRadius: 1,
-            backgroundColor: theme.palette.mode === "light" ? "#FFF" : theme.palette.background.default,
+            backgroundColor: theme.palette.mode === "light" ? "#FFF" : theme.palette.background.paper,
         }}
         p={2}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -63,7 +63,7 @@ const Chats = () => {
             sx={{
                 position: "relative",
                 width: 320,
-                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
+                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.default,
                 boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
             }}
             >
