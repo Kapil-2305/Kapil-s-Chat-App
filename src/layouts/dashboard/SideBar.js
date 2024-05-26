@@ -7,6 +7,7 @@ import { Nav_Buttons } from '../../data';
 import AntSwitch from '../../components/AntSwitch';
 import Logo from "../../assets/Images/logo.ico";
 import useSettings from "../../hooks/useSettings";
+import ProfileMenu from "./ProfileMenu";
 
 const SideBar = () => {
     const theme = useTheme();
@@ -63,7 +64,8 @@ const SideBar = () => {
 
                 <Stack spacing={4}>
                     <AntSwitch onChange={()=> {onToggleMode()}} defaultChecked />
-                    <Avatar src={faker.image.avatar()} />
+                    {/* Profile Menu */}
+                    <ProfileMenu />
                 </Stack>
             </Stack>
         </Box>
