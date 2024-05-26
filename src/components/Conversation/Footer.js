@@ -5,6 +5,8 @@ import {
   InputAdornment,
   IconButton,
   TextField,
+  Fab,
+  Tooltip,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { LinkSimple, Smiley, PaperPlaneTilt, Image, Sticker, Camera, File, User } from "phosphor-react";
@@ -27,11 +29,24 @@ const ChatInput = ({setOpenPicker}) => {
             InputProps={{
                 disableUnderline: true,
                 startAdornment: (
-                    <InputAdornment>
-                    <IconButton>
-                        <LinkSimple />
-                    </IconButton>
-                    </InputAdornment>
+                    <Stack sx={{width: 'max-content'}}>
+                        <Stack sx={{position: "relative"}}>
+                            {
+                                Actions.map((el)=>(
+                                    <Tooltip>
+                                        <Fab sx={{position: "absolute", top: -el.y, backgroundColor: el.color}}>
+                                            {el.icon}
+                                        </Fab>
+                                    </Tooltip>
+                                ))
+                            }
+                        </Stack>
+                        <InputAdornment>
+                            <IconButton>
+                                <LinkSimple />
+                            </IconButton>
+                        </InputAdornment>
+                    </Stack>
                 ),
                 endAdornment: (
                     <InputAdornment>
