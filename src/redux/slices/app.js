@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../utils/axios";
 // import S3 from "../../utils/s3";
-import {v4} from 'uuid';
-import S3 from "../../utils/s3";
-import { S3_BUCKET_NAME } from "../../config";
+// import {v4} from 'uuid';
+// import S3 from "../../utils/s3";
+// import { S3_BUCKET_NAME } from "../../config";
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -107,14 +107,14 @@ export const showSnackbar =
   };
 
 export function ToggleSidebar() {
-  return async (dispatch, getState) => {
-    dispatch(slice.actions.toggleSideBar());
-  };
+    return async (dispatch, getState) => {
+        dispatch(slice.actions.toggleSideBar());
+    };
 }
 export function UpdateSidebarType(type) {
-  return async (dispatch, getState) => {
-    dispatch(slice.actions.updateSideBarType({ type }));
-  };
+    return async (dispatch, getState) => {
+        dispatch(slice.actions.updateSideBarType({ type }));
+    };
 }
 export function UpdateTab(tab) {
   return async (dispatch, getState) => {
