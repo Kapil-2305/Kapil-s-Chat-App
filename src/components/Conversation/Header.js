@@ -12,9 +12,12 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import StyledBadge from "../StyledBadge";
+import { ToggleSidebar } from "../../redux/slices/app";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   return (
     <Box
       sx={{
@@ -33,7 +36,9 @@ const Header = () => {
         justifyContent={"space-between"}
         sx={{ width: "100%", height: "100%" }}
       >
-        <Stack direction={"row"} spacing={2}>
+        <Stack onClick={()=>{
+          dispatch(ToggleSidebar());
+        }} direction={"row"} spacing={2}>
           <Box>
             <StyledBadge
               overlap="circular"
@@ -44,7 +49,7 @@ const Header = () => {
             </StyledBadge>
           </Box>
 
-          <Stack spacing={0.2}>
+          <Stack>
             <Typography variant="subtitle2">{faker.name.fullName()}</Typography>
             <Typography variant="caption">Online</Typography>
           </Stack>
