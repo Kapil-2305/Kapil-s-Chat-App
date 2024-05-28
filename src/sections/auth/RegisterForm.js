@@ -19,7 +19,7 @@ export default function AuthRegisterForm() {
     const {isLoading} = useSelector((state) => state.auth);
     const [showPassword, setShowPassword] = useState(false);
 
-    const LoginSchema = Yup.object().shape({
+    const RegisterSchema = Yup.object().shape({
         firstName: Yup.string().required("First name required"),
         lastName: Yup.string().required("Last name required"),
         email: Yup.string()
@@ -36,7 +36,7 @@ export default function AuthRegisterForm() {
     };
 
     const methods = useForm({
-        resolver: yupResolver(LoginSchema),
+        resolver: yupResolver(RegisterSchema),
         defaultValues,
     });
 
