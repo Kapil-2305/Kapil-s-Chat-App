@@ -8,11 +8,42 @@ import AntSwitch from '../../components/AntSwitch';
 import Logo from "../../assets/Images/logo.ico";
 import useSettings from "../../hooks/useSettings";
 import ProfileMenu from "./ProfileMenu";
+import { useNavigate } from "react-router-dom";
+
+const getPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/app";
+    
+        case 1:
+            return "/group";
+    
+        case 2:
+            return "/call";
+    
+        case 3:
+            return "/settings";
+    
+        default:
+            break;
+    }
+};
 
 const SideBar = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const [selected, setSelected] = useState(0);
     const {onToggleMode} = useSettings();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <Box p={2} sx={{background: theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", height: "100vh", width: 100}}>
@@ -37,7 +68,13 @@ const SideBar = () => {
                                         </IconButton>
                                     </Box>
                                 ) : (
-                                    <IconButton onClick={()=>setSelected(el.index)} sx={{width: "max-content", color: theme.palette.mode === "light" ? "#000" : "#fff"}} key={el.index}>
+                                    <IconButton 
+                                        onClick={()=>{
+                                            setSelected(el.index);
+                                            navigate(getPath(el.index));
+                                        }} 
+                                        sx={{width: "max-content", color: theme.palette.mode === "light" ? "#000" : "#fff"}} key={el.index}
+                                    >
                                         {el.icon}
                                     </IconButton>
                                 )
@@ -54,7 +91,13 @@ const SideBar = () => {
                                 </Box>
                             ) : 
                             (
-                                <IconButton onClick={()=>setSelected(3)} sx={{width: "max-content", color: theme.palette.mode === "light" ? "#000" : "#fff"}}>
+                                <IconButton 
+                                    onClick={()=>{
+                                        setSelected(3);
+                                        navigate(getPath(3));
+                                    }} 
+                                    sx={{width: "max-content", color: theme.palette.mode === "light" ? "#000" : "#fff"}}
+                                >
                                     <Gear />
                                 </IconButton>
                             )
