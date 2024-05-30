@@ -7,12 +7,26 @@ import { Profile_Menu } from "../../data";
 // import { useDispatch, useSelector } from "react-redux";
 // import { LogoutUser } from "../../redux/slices/auth";
 // import { socket } from "../../socket";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { AWS_S3_REGION, S3_BUCKET_NAME } from "../../config";
+
+const getMenuPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/profile";
+        case 1:
+            return "/settings";
+        case 2:
+            // Todo => update token & setAuth = false
+            return "/auth/login";
+        default:
+            break;
+    }
+}
 
 const ProfileMenu = () => {
     // const {user} = useSelector((state) => state.app);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openMenu = Boolean(anchorEl);
@@ -61,8 +75,12 @@ const ProfileMenu = () => {
             <Box p={1}>
                 <Stack spacing={1}>
                     {Profile_Menu.map((el, idx) => (
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem key={idx}>
                             <Stack
+                                onClick={() => {
+                                    navigate(getMenuPath(idx));
+                                    handleClose();
+                                }}
                                 sx={{ width: 100 }}
                                 direction="row"
                                 alignItems={"center"}
