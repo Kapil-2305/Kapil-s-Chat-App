@@ -10,9 +10,21 @@ const mongosanitize = require('express-mongo-sanitize'); // Express middleware t
 
 const bodyParser = require('body-parser'); // Node.js body parsing middleware
 
-const xss = require('xss-clean'); // Express middleware to sanitize user input coming from POST body, GET queries, and url params
+const xss = require('xss'); // Express middleware to sanitize user input coming from POST body, GET queries, and url params
+
+const cors = require('cors'); // Express middleware to enable CORS with various options
 
 const app = express();
+
+app.use(express.urlencoded({extended: true}));
+app.use(mongosanitize());
+// app.use(xss());
+
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    credentials: true,
+}));
 
 app.use(express.json({limit: "10kb"}));
 app.use(bodyParser.json());
@@ -29,9 +41,6 @@ const limiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
     message: 'Too many requests from this IP, please try again in an hour'
 });
-
 app.use('/tawk', limiter);
-
-app.use(express.urlencoded({extended: true}));
 
 module.exports = app;
