@@ -60,38 +60,38 @@ exports.register = catchAsync(async (req, res, next) => {
 });
 
 exports.sendOTP = catchAsync(async (req, res, next) => {
-  const { userId } = req;
-  const new_otp = otpGenerator.generate(6, {
-    upperCaseAlphabets: false,
-    specialChars: false,
-    lowerCaseAlphabets: false,
-  });
+    const { userId } = req;
+    const new_otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        specialChars: false,
+        lowerCaseAlphabets: false,
+    });
 
-  const otp_expiry_time = Date.now() + 10 * 60 * 1000; // 10 Mins after otp is sent
+    const otp_expiry_time = Date.now() + 10 * 60 * 1000; // 10 Mins after otp is sent
 
-  const user = await User.findByIdAndUpdate(userId, {
-    otp_expiry_time: otp_expiry_time,
-  });
+    const user = await User.findByIdAndUpdate(userId, {
+        otp_expiry_time: otp_expiry_time,
+    });
 
-  user.otp = new_otp.toString();
+    user.otp = new_otp.toString();
 
-  await user.save({ new: true, validateModifiedOnly: true });
+    await user.save({ new: true, validateModifiedOnly: true });
 
-  console.log(new_otp);
+    console.log(new_otp);
 
-  // TODO send mail
-  mailService.sendEmail({
-    from: "shreyanshshah242@gmail.com",
-    to: user.email,
-    subject: "Verification OTP",
-    html: otp(user.firstName, new_otp),
-    attachments: [],
-  });
+    // TODO send mail
+    mailService.sendEmail({
+        from: "shreyanshshah242@gmail.com",
+        to: user.email,
+        subject: "Verification OTP",
+        html: otp(user.firstName, new_otp),
+        attachments: [],
+    });
 
-  res.status(200).json({
-    status: "success",
-    message: "OTP Sent Successfully!",
-  });
+    res.status(200).json({
+        status: "success",
+        message: "OTP Sent Successfully!",
+    });
 });
 
 exports.verifyOTP = catchAsync(async (req, res, next) => {
