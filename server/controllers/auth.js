@@ -229,47 +229,48 @@ exports.protect = catchAsync(async (req, res, next) => {
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  // 1) Get user based on POSTed email
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(404).json({
-      status: "error",
-      message: "There is no user with email address.",
-    });
-  }
+    // 1) Get user based on POSTed email
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return res.status(404).json({
+            status: "error",
+            message: "There is no user with email address.",
+        });
+    }
 
-  // 2) Generate the random reset token
-  const resetToken = user.createPasswordResetToken();
-  await user.save({ validateBeforeSave: false });
-
-  // 3) Send it to user's email
-  try {
-    const resetURL = `http://localhost:3000/auth/new-password?token=${resetToken}`;
-    // TODO => Send Email with this Reset URL to user's email address
-
-    console.log(resetURL);
-
-    mailService.sendEmail({
-      from: "shreyanshshah242@gmail.com",
-      to: user.email,
-      subject: "Reset Password",
-      html: resetPassword(user.firstName, resetURL),
-      attachments: [],
-    });
-
-    res.status(200).json({
-      status: "success",
-      message: "Token sent to email!",
-    });
-  } catch (err) {
-    user.passwordResetToken = undefined;
-    user.passwordResetExpires = undefined;
+    // 2) Generate the random reset token
+    const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
-    return res.status(500).json({
-      message: "There was an error sending the email. Try again later!",
-    });
-  }
+    // 3) Send it to user's email
+    try {
+        const resetURL = `http://localhost:3000/auth/new-password?token=${resetToken}`;
+        // TODO => Send Email with this Reset URL to user's email address
+
+        console.log(resetURL);
+
+        mailService.sendEmail({
+            from: "shreyanshshah242@gmail.com",
+            to: user.email,
+            subject: "Reset Password",
+            html: resetPassword(user.firstName, resetURL),
+            attachments: [],
+        });
+
+        res.status(200).json({
+            status: "success",
+            message: "Token sent to email!",
+        });
+    } 
+    catch (err) {
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+
+        return res.status(500).json({
+            message: "There was an error sending the email. Try again later!",
+        });
+    }
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
