@@ -291,13 +291,14 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
             message: "Token is Invalid or Expired",
         });
     }
+
+    // 3) Update changedPasswordAt property for the user
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save();
 
-    // 3) Update changedPasswordAt property for the user
     // 4) Log the user in, send JWT
     const token = signToken(user._id);
 
