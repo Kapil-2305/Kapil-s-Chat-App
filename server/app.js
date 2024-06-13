@@ -1,5 +1,7 @@
 const express = require('express'); // Web framework for Node.js
 
+const routes = require('./routes/index'); // Import routes
+
 const morgan = require('morgan'); // HTTP request logger middleware for Node.js
 
 const rateLimit = require('express-rate-limit'); // Basic rate-limiting middleware for Express
@@ -42,5 +44,7 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again in an hour'
 });
 app.use('/tawk', limiter);
+
+app.use(routes);
 
 module.exports = app;
