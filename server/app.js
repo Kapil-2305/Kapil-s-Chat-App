@@ -15,6 +15,8 @@ const bodyParser = require('body-parser'); // Node.js body parsing middleware
 const xss = require('xss'); // Express middleware to sanitize user input coming from POST body, GET queries, and url params
 
 const cors = require('cors'); // Express middleware to enable CORS with various options
+const cookieParser = require("cookie-parser"); // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
+const session = require("cookie-session"); // Simple cookie-based session middleware.
 
 const app = express();
 
@@ -28,19 +30,21 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use(cookieParser());
+
 app.use(express.json({limit: "10kb"}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(
     session({
-      secret: "keyboard cat",
-      proxy: true,
-      resave: true,
-      saveUnintialized: true,
-      cookie: {
-        secure: false,
-      },
+        secret: "keyboard cat",
+        proxy: true,
+        resave: true,
+        saveUnintialized: true,
+        cookie: {
+            secure: false,
+        },
     })
 );
 
