@@ -45,6 +45,14 @@ const limiter = rateLimit({
 });
 app.use('/tawk', limiter);
 
+app.use(
+    express.urlencoded({
+      extended: true,
+    })
+); // Returns middleware that only parses urlencoded bodies
+
 app.use(routes);
+
+app.use(xss());
 
 module.exports = app;
