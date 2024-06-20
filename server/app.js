@@ -32,6 +32,18 @@ app.use(express.json({limit: "10kb"}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(
+    session({
+      secret: "keyboard cat",
+      proxy: true,
+      resave: true,
+      saveUnintialized: true,
+      cookie: {
+        secure: false,
+      },
+    })
+);
+
 app.use(helmet());
 
 if(process.env.NODE_ENV === 'development') {
