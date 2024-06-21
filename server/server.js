@@ -22,6 +22,12 @@ const http = require('http');
 
 const server = http.createServer(app);
 
+const User = require("./models/user");
+const FriendRequest = require("./models/friendRequest");
+const OneToOneMessage = require("./models/OneToOneMessage");
+const AudioCall = require("./models/audioCall");
+const VideoCall = require("./models/videoCall");
+
 const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 
 mongoose.connect(DB, {
