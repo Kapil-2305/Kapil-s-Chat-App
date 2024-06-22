@@ -28,6 +28,14 @@ const OneToOneMessage = require("./models/OneToOneMessage");
 const AudioCall = require("./models/audioCall");
 const VideoCall = require("./models/videoCall");
 
+// Create an io server and allow for CORS from http://localhost:3000 with GET and POST methods
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
+});
+
 const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 
 mongoose.connect(DB, {
