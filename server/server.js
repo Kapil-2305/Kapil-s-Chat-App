@@ -51,6 +51,24 @@ mongoose.connect(DB, {
     console.log(err);
 });
 
+// Listen for when the client connects via socket.io-client
+io.on("connection", async (socket) => {
+    console.log(JSON.stringify(socket.handshake.query));
+    const user_id = socket.handshake.query["user_id"];
+  
+    console.log(`User connected ${socket.id}`);
+  
+    if (user_id != null && Boolean(user_id)) {
+      try {
+        User.findByIdAndUpdate(user_id, {
+          socket_id: socket.id,
+          status: "Online",
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+});
 const port = process.env.PORT || 8000;
 
 server.listen(3000, () => {
