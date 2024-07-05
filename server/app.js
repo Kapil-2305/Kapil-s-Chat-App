@@ -69,6 +69,4 @@ app.use(
 
 app.use(routes);
 
-app.use(xss());
-
 module.exports = app;
