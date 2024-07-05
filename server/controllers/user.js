@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const catchAsync = require("../utils/catchAsync");
+const filterObj = require("../utils/filterObj");
 
 exports.updateMe = catchAsync(async (req, res, next) => {
     const filteredBody = filterObj(
