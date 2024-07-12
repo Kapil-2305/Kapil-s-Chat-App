@@ -61,15 +61,34 @@ io.on("connection", async (socket) => {
     console.log(`User connected ${socket.id}`);
   
     if (user_id != null && Boolean(user_id)) {
-      try {
-        User.findByIdAndUpdate(user_id, {
-          socket_id: socket.id,
-          status: "Online",
-        });
-      } catch (e) {
-        console.log(e);
-      }
+        try {
+            User.findByIdAndUpdate(user_id, {
+            socket_id: socket.id,
+            status: "Online",
+            });
+        } 
+        catch (e) {
+            console.log(e);
+        }
     }
+
+    socket.on("friend_request", async (data) => {
+        const to = await User.findById(data.to).select("socket_id");
+        const from = await User.findById(data.from).select("socket_id");
+
+        // create a friend request
+        await FriendRequest.create({
+            sender: data.from,
+            recipient: data.to,
+        });
+        // emit event request received to recipient
+        io.to(to?.socket_id).emit("new_friend_request", {
+            message: "New friend request received",
+        });
+        io.to(from?.socket_id).emit("request_sent", {
+            message: "Request Sent successfully!",
+        });
+    })
 });
 
 const port = process.env.PORT || 8000;
