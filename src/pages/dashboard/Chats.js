@@ -6,6 +6,7 @@ import { Search, SearchIconWrapper, StyledInputBase } from "../../components/Sea
 import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar"
 import ChatElement from "../../components/ChatElement";
+import Friends from "../../sections/dashboard/Friends";
 
 const Chats = () => {
     const theme = useTheme();
