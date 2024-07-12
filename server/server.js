@@ -18,6 +18,8 @@ process.on('unhandledRejection', (err) => {
     });
 });
 
+const { Server } = require('socket.io');
+
 const http = require('http');
 
 const server = http.createServer(app);
@@ -29,12 +31,12 @@ const AudioCall = require("./models/audioCall");
 const VideoCall = require("./models/videoCall");
 
 // Create an io server and allow for CORS from http://localhost:3000 with GET and POST methods
-// const io = new Server(server, {
-//     cors: {
-//         origin: "*",
-//         methods: ["GET", "POST"],
-//     },
-// });
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
+});
 
 // const DB = process.env.DB_URL.replace("<password>", process.env.DB_PASSWORD);
 
@@ -52,23 +54,23 @@ mongoose.connect(process.env.DB_URL, {
 });
 
 // Listen for when the client connects via socket.io-client
-// io.on("connection", async (socket) => {
-//     console.log(JSON.stringify(socket.handshake.query));
-//     const user_id = socket.handshake.query["user_id"];
+io.on("connection", async (socket) => {
+    console.log(JSON.stringify(socket.handshake.query));
+    const user_id = socket.handshake.query["user_id"];
   
-//     console.log(`User connected ${socket.id}`);
+    console.log(`User connected ${socket.id}`);
   
-//     if (user_id != null && Boolean(user_id)) {
-//       try {
-//         User.findByIdAndUpdate(user_id, {
-//           socket_id: socket.id,
-//           status: "Online",
-//         });
-//       } catch (e) {
-//         console.log(e);
-//       }
-//     }
-// });
+    if (user_id != null && Boolean(user_id)) {
+      try {
+        User.findByIdAndUpdate(user_id, {
+          socket_id: socket.id,
+          status: "Online",
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+});
 
 const port = process.env.PORT || 8000;
 
