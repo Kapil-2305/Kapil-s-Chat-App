@@ -123,26 +123,24 @@ export function UpdateTab(tab) {
 }
 
 export function FetchUsers() {
-  return async (dispatch, getState) => {
-    await axios
-      .get(
-        "/user/get-users",
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getState().auth.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        dispatch(slice.actions.updateUsers({ users: response.data.data }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    return async (dispatch, getState) => {
+        await axios.get(
+            "/user/get-users",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getState().auth.token}`,
+                },
+            }
+        )
+        .then((response) => {
+            console.log(response);
+            dispatch(slice.actions.updateUsers({ users: response.data.data }));
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    };
 }
 export function FetchAllUsers() {
   return async (dispatch, getState) => {
