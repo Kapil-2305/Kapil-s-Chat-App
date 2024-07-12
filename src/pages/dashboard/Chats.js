@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Stack, Typography, IconButton, Button, Divider, Avatar, Badge } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles"
-import { CircleDashed, MagnifyingGlass, ArchiveBox } from "phosphor-react";
+import { CircleDashed, MagnifyingGlass, ArchiveBox, Users } from "phosphor-react";
 import { Search, SearchIconWrapper, StyledInputBase } from "../../components/Search";
 import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar"
@@ -9,6 +9,15 @@ import ChatElement from "../../components/ChatElement";
 
 const Chats = () => {
     const theme = useTheme();
+
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
     return (
         <>
             <Box
@@ -24,9 +33,20 @@ const Chats = () => {
                         <Typography variant="h5">
                             Chats
                         </Typography>
-                        <IconButton>
-                            <CircleDashed />
-                        </IconButton>
+
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                            <IconButton 
+                                onClick={() => {
+                                    handleOpenDialog();
+                                }}
+                                sx={{ width: "max-content" }}
+                            >
+                                <Users />
+                            </IconButton>
+                            <IconButton sx={{ width: "max-content" }}>
+                                <CircleDashed />
+                            </IconButton>
+                        </Stack>
                     </Stack>
 
                     <Stack sw={{width: "100%"}}>
