@@ -165,26 +165,24 @@ export function FetchAllUsers() {
   };
 }
 export function FetchFriends() {
-  return async (dispatch, getState) => {
-    await axios
-      .get(
-        "/user/get-friends",
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getState().auth.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        dispatch(slice.actions.updateFriends({ friends: response.data.data }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    return async (dispatch, getState) => {
+        await axios.get(
+            "/user/get-friends",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getState().auth.token}`,
+                },
+            }
+        )
+        .then((response) => {
+            console.log(response);
+            dispatch(slice.actions.updateFriends({ friends: response.data.data }));
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    };
 }
 export function FetchFriendRequests() {
   return async (dispatch, getState) => {
