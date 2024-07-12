@@ -185,28 +185,26 @@ export function FetchFriends() {
     };
 }
 export function FetchFriendRequests() {
-  return async (dispatch, getState) => {
-    await axios
-      .get(
-        "/user/get-requests",
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getState().auth.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        dispatch(
-          slice.actions.updateFriendRequests({ requests: response.data.data })
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    return async (dispatch, getState) => {
+        await axios.get(
+            "/user/get-requests",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getState().auth.token}`,
+                },
+            }
+        )
+        .then((response) => {
+            console.log(response);
+            dispatch(
+                slice.actions.updateFriendRequests({ requests: response.data.data })
+            );
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    };
 }
 
 export const SelectConversation = ({ room_id }) => {
