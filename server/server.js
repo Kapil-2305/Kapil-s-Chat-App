@@ -128,6 +128,6 @@ io.on("connection", async (socket) => {
 
 const port = process.env.PORT || 8000;
 
-server.listen(3000, () => {
+server.listen(3001, () => {
     console.log(`Server is listening on port ${port}`);
 });
