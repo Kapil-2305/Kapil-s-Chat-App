@@ -10,7 +10,7 @@ import {
     FriendElement,
     FriendRequestElement,
     UserElement,
-} from "../../components/UserEleement";
+} from "../../components/UserElement";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
