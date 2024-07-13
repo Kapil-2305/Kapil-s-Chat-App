@@ -8,8 +8,24 @@ import { SimpleBarStyle } from "../../components/Scrollbar"
 import ChatElement from "../../components/ChatElement";
 import Friends from "../../sections/dashboard/Friends";
 
+const user_id = window.localStorage.getItem("user_id");
+
 const Chats = () => {
     const theme = useTheme();
+    const isDesktop = useResponsive("up", "md");
+
+    const dispatch = useDispatch();
+
+    const {conversations} = useSelector((state) => state.conversation.direct_chat);
+
+    useEffect(() => {
+        socket.emit("get_direct_conversations", { user_id }, (data) => {
+            console.log(data); // this data is the list of conversations
+            // dispatch action
+
+            dispatch(FetchDirectConversations({ conversations: data }));
+        });
+    }, []);
 
     const [openDialog, setOpenDialog] = useState(false);
 
