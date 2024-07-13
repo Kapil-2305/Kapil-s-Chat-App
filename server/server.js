@@ -120,6 +120,46 @@ io.on("connection", async (socket) => {
         });
     });
 
+    socket.on("text_message", async (data) => {
+        console.log("Received message:", data);
+    
+        // data: {to, from, text}
+    
+        const { message, conversation_id, from, to, type } = data;
+    
+        const to_user = await User.findById(to);
+        const from_user = await User.findById(from);
+    
+        // message => {to, from, type, created_at, text, file}
+    
+        const new_message = {
+            to: to,
+            from: from,
+            type: type,
+            created_at: Date.now(),
+            text: message,
+        };
+    
+        // fetch OneToOneMessage Doc & push a new message to existing conversation
+        const chat = await OneToOneMessage.findById(conversation_id);
+        chat.messages.push(new_message);
+        // save to db`
+        await chat.save({ new: true, validateModifiedOnly: true });
+    
+        // emit incoming_message -> to user
+    
+        io.to(to_user?.socket_id).emit("new_message", {
+            conversation_id,
+            message: new_message,
+        });
+    
+        // emit outgoing_message -> from user
+        io.to(from_user?.socket_id).emit("new_message", {
+            conversation_id,
+            message: new_message,
+        });
+      });
+
     socket.on("end", async (data) => {
         if (data.user_id) {
             await User.findByIdAndUpdate(data.user_id, { status: "Offline" });
