@@ -120,7 +120,10 @@ io.on("connection", async (socket) => {
         });
     });
 
-    socket.on("end", function(){
+    socket.on("end", async (data) => {
+        if (data.user_id) {
+            await User.findByIdAndUpdate(data.user_id, { status: "Offline" });
+        }
         console.log("Call ended");
         socket.disconnect();
     })
