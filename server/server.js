@@ -197,6 +197,38 @@ io.on("connection", async (socket) => {
         callback(existing_conversations);
     });
 
+    socket.on("start_conversation", async (data) => {
+        // data: {to: from:}
+        const { to, from } = data;
+    
+        // check if there is any existing conversation
+        const existing_conversations = await OneToOneMessage.find({
+            participants: { $size: 2, $all: [to, from] },
+        }).populate("participants", "firstName lastName _id email status");
+    
+        console.log(existing_conversations[0], "Existing Conversation");
+    
+        // if no => create a new OneToOneMessage doc & emit event "start_chat" & send conversation details as payload
+        if (existing_conversations.length === 0) {
+            let new_chat = await OneToOneMessage.create({
+                participants: [to, from],
+            });
+        
+            new_chat = await OneToOneMessage.findById(new_chat).populate(
+                "participants",
+                "firstName lastName _id email status"
+            );
+        
+            console.log(new_chat);
+        
+            socket.emit("start_chat", new_chat);
+        }
+        // if yes => just emit event "start_chat" & send conversation details as payload
+        else {
+            socket.emit("start_chat", existing_conversations[0]);
+        }
+    });
+
     socket.on("end", async (data) => {
         if (data.user_id) {
             await User.findByIdAndUpdate(data.user_id, { status: "Offline" });
