@@ -27,9 +27,9 @@ const UsersList = () => {
 
     return (
         <>
-        {users.map((el, idx) => {
-            return <UserElement key={idx} {...el} />;
-        })}
+            {users.map((el, idx) => {
+                return <UserElement key={idx} {...el} />;
+            })}
         </>
     );
 };
@@ -45,9 +45,9 @@ const FriendsList = () => {
 
     return (
         <>
-        {friends.map((el, idx) => {
-            return <FriendElement key={idx} {...el} />;
-        })}
+            {friends.map((el, idx) => {
+                return <FriendElement key={idx} {...el} />;
+            })}
         </>
     );
 };
@@ -63,9 +63,9 @@ const RequestsList = () => {
 
     return (
         <>
-        {friendRequests.map((el, idx) => {
-            return <FriendRequestElement key={idx} {...el.sender} id={el._id} />;
-        })}
+            {friendRequests.map((el, idx) => {
+                return <FriendRequestElement key={idx} {...el.sender} id={el._id} />;
+            })}
         </>
     );
 };
