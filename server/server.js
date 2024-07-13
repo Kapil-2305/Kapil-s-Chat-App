@@ -185,6 +185,18 @@ io.on("connection", async (socket) => {
         // emit outgoing_message -> from user
     });
 
+    socket.on("get_direct_conversations", async ({ user_id }, callback) => {
+        const existing_conversations = await OneToOneMessage.find({
+            participants: { $all: [user_id] },
+        }).populate("participants", "firstName lastName avatar _id email status");
+    
+        // db.books.find({ authors: { $elemMatch: { name: "John Smith" } } })
+    
+        console.log(existing_conversations);
+    
+        callback(existing_conversations);
+    });
+
     socket.on("end", async (data) => {
         if (data.user_id) {
             await User.findByIdAndUpdate(data.user_id, { status: "Offline" });
