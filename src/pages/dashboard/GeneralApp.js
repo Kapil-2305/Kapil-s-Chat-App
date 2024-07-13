@@ -7,6 +7,7 @@ import Contact from "../../components/Contact";
 import { useSelector } from "react-redux";
 import Media from "../../components/SharedMessages";
 import StarredMessages from "../../components/StarredMessages";
+import NoChat from "../../assets/Illustration/NoChat"
 
 const GeneralApp = () => {
     const theme = useTheme();
@@ -19,7 +20,30 @@ const GeneralApp = () => {
 
             {/* Conversation */}
             <Box sx={{height: "100%", width: sideBar.open  ? `calc(100vw - 740px )`  : "calc(100vw - 416px )", backgroundColor: theme.palette.mode === "light" ? "#f0f4fa" : theme.palette.background.paper}}>
-                <Conversation />
+                {chat_type === "individual" && room_id !== null ? (
+                    <ChatComponent />
+                ) : (
+                    <Stack
+                        spacing={2}
+                        sx={{ height: "100%", width: "100%" }}
+                        alignItems="center"
+                        justifyContent={"center"}
+                    >
+                        <NoChat />
+                        <Typography variant="subtitle2">
+                            Select a conversation or start a{" "}
+                            <Link
+                                style={{
+                                    color: theme.palette.primary.main,
+                                    textDecoration: "none",
+                                }}
+                                to="/"
+                            >
+                                new one
+                            </Link>
+                        </Typography>
+                    </Stack>
+                )} 
             </Box>
 
             {/* Contact */}
