@@ -120,6 +120,15 @@ io.on("connection", async (socket) => {
         });
     });
 
+    socket.on("get_messages", async (data, callback) => {
+        try {
+            const { messages } = await OneToOneMessage.findById(data.conversation_id).select("messages");
+            callback(messages);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
     socket.on("text_message", async (data) => {
         console.log("Received message:", data);
     
