@@ -132,8 +132,7 @@ io.on("connection", async (socket) => {
     socket.on("text_message", async (data) => {
         console.log("Received message:", data);
     
-        // data: {to, from, text}
-    
+        // data: {to, from, text, conversation_id, type}
         const { message, conversation_id, from, to, type } = data;
     
         const to_user = await User.findById(to);
