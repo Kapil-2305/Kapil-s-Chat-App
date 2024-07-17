@@ -22,8 +22,8 @@ import {
 
 import { useTheme } from "@mui/material/styles";
 import { faker } from "@faker-js/faker";
-import ThemeDialog from "../../sections/dashboard/settings/ThemeDialog";
-import ShortcutDialog from "../../sections/dashboard/settings/ShortcutDialog";
+import ThemeDialog from "../../../sections/dashboard/settings/ThemeDialog";
+import ShortcutDialog from "../../../sections/dashboard/settings/ShortcutDialog";
 
 const Settings = () => {
     const theme = useTheme();
@@ -49,19 +49,19 @@ const Settings = () => {
             key: 0,
             icon: <Bell size={20} />,
             title: "Notifications",
-            onclick: () => {},
+            onclick: () => { },
         },
         {
             key: 1,
             icon: <Lock size={20} />,
             title: "Privacy",
-            onclick: () => {},
+            onclick: () => { },
         },
         {
             key: 2,
             icon: <Key size={20} />,
             title: "Security",
-            onclick: () => {},
+            onclick: () => { },
         },
         {
             key: 3,
@@ -73,13 +73,13 @@ const Settings = () => {
             key: 4,
             icon: <Image size={20} />,
             title: "Chat Wallpaper",
-            onclick: () => {},
+            onclick: () => { },
         },
         {
             key: 5,
             icon: <Note size={20} />,
             title: "Request Account Info",
-            onclick: () => {},
+            onclick: () => { },
         },
         {
             key: 6,
@@ -91,7 +91,7 @@ const Settings = () => {
             key: 7,
             icon: <Info size={20} />,
             title: "Help",
-            onclick: () => {},
+            onclick: () => { },
         },
     ];
 
@@ -104,7 +104,10 @@ const Settings = () => {
                         overflowY: "scroll",
                         height: "100vh",
                         width: 320,
-                        backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
+                        backgroundColor:
+                            theme.palette.mode === "light"
+                                ? "#F8FAFF"
+                                : theme.palette.background,
                         boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
                     }}
                 >
@@ -139,11 +142,11 @@ const Settings = () => {
                                             sx={{ cursor: "pointer" }}
                                             spacing={2}
                                         >
-                                        <Stack alignItems={"center"} direction="row" spacing={2}>
-                                            {icon}
-                                            <Typography variant="body2">{title}</Typography>
-                                        </Stack>
-                                        {key !== 7 && <Divider />}
+                                            <Stack alignItems={"center"} direction="row" spacing={2}>
+                                                {icon}
+                                                <Typography variant="body2">{title}</Typography>
+                                            </Stack>
+                                            {key !== 7 && <Divider />}
                                         </Stack>
                                     </>
                                 );
@@ -158,9 +161,9 @@ const Settings = () => {
                         height: "100%",
                         width: "calc(100vw - 420px )",
                         backgroundColor:
-                        theme.palette.mode === "light"
-                            ? "#FFF"
-                            : theme.palette.background.paper,
+                            theme.palette.mode === "light"
+                                ? "#FFF"
+                                : theme.palette.background.paper,
                         borderBottom: "6px solid #0162C4",
                     }}
                 ></Box>
@@ -168,7 +171,12 @@ const Settings = () => {
             {openTheme && (
                 <ThemeDialog open={openTheme} handleClose={handleCloseTheme} />
             )}
-            {openShortcuts && <ShortcutDialog open={openShortcuts} handleClose={handleCloseShortcuts} /> }
+            {openShortcuts && (
+                <ShortcutDialog
+                    open={openShortcuts}
+                    handleClose={handleCloseShortcuts}
+                />
+            )}
         </>
     );
 };
