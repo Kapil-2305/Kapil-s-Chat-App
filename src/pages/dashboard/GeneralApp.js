@@ -1,13 +1,15 @@
 import React from "react";
 import Chats from "./Chats";
-import { Stack, Box } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 import Conversation from "../../components/Conversation";
 import { useTheme } from "@mui/material/styles";
 import Contact from "../../components/Contact";
 import { useSelector } from "react-redux";
 import Media from "../../components/SharedMessages";
 import StarredMessages from "../../components/StarredMessages";
-import NoChat from "../../assets/Illustration/NoChat"
+import NoChat from "../../assets/Illustration/NoChat";
+import { Link, useSearchParams } from "react-router-dom";
+import ChatComponent from "./Conversation";
 
 const GeneralApp = () => {
     const theme = useTheme();
