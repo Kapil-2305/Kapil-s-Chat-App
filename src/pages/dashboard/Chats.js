@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, Typography, IconButton, Button, Divider, Avatar, Badge } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles"
 import { CircleDashed, MagnifyingGlass, ArchiveBox, Users } from "phosphor-react";
@@ -7,6 +7,10 @@ import { ChatList } from "../../data";
 import { SimpleBarStyle } from "../../components/Scrollbar"
 import ChatElement from "../../components/ChatElement";
 import Friends from "../../sections/dashboard/Friends";
+import useResponsive from "../../hooks/useResponsive";
+
+import { socket } from "../../socket";
+import { useDispatch, useSelector } from "react-redux";
 
 const user_id = window.localStorage.getItem("user_id");
 
